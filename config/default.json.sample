@@ -1,0 +1,7 @@
+{
+    "server": {
+        "port": 3000
+    },
+    "env": "prod",
+    "base_url": "/:maintainer/api/v1/associate"
+}

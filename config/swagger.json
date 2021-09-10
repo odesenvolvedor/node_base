@@ -1,0 +1,2071 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "MEI Docs API",
+    "description": "Documentação de API desenvolvida em NodeJs"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "host": "mei-backend.redetempo.com.br",
+  "securityDefinitions": {
+    "Bearer": {
+      "description": "Para acessar a API, um token JWT válido deve ser passado.\nUm token JWT válido é gerado pelo MS ASSOCIATE e retornado como resposta a uma requisição de login.\nA seguinte sintaxe deve ser usada: Bearer TOKEN",
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization"
+    }
+  },
+  "basePath": "/{maintainer}/api/v1/associate",
+  "tags": [
+    {
+      "name": "Associado",
+      "description": "Cadastro de associado"
+    },
+    {
+      "name": "Termo de uso",
+      "description": "Termo de uso"
+    },
+    {
+      "name": "Treinamento",
+      "description": "Operações responsáveis pelo treinamento"
+    },
+    {
+      "name": "Confort",
+      "description": "Operações referentes a api de Confort"
+    },
+    {
+      "name": "Invoice",
+      "description": "Operações referentes a api de NFSe"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "Associado"
+        ],
+        "description": "Busca os dados do associado logado",
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "cpf": {
+                  "type": "string"
+                },
+                "rg": {
+                  "type": "string"
+                },
+                "associatedCode": {
+                  "type": "string"
+                },
+                "cnpj": {
+                  "type": "string"
+                },
+                "municipalRegistration": {
+                  "type": "string"
+                },
+                "stateRegistration": {
+                  "type": "string"
+                },
+                "socialName": {
+                  "type": "string"
+                },
+                "fantasyName": {
+                  "type": "string"
+                },
+                "natureOperation": {
+                  "type": "string"
+                },
+                "taxationRegime": {
+                  "type": "string"
+                },
+                "foundationDate": {
+                  "type": "string"
+                },
+                "cnaePrimary": {
+                  "type": "string"
+                },
+                "cnaeSecondary": {
+                  "type": "string"
+                },
+                "AddressId": {
+                  "type": "number"
+                },
+                "address": {
+                  "type": "object",
+                  "properties": {
+                    "zipCode": {
+                      "type": "string"
+                    },
+                    "street": {
+                      "type": "string"
+                    },
+                    "numberHouse": {
+                      "type": "number"
+                    },
+                    "neighborhood": {
+                      "type": "string"
+                    },
+                    "complement": {
+                      "type": "string"
+                    },
+                    "referencePoint": {
+                      "type": "string"
+                    },
+                    "cityId": {
+                      "type": "number"
+                    },
+                    "city": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "stateId": {
+                          "type": "number"
+                        },
+                        "state": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "initials": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Associado"
+        ],
+        "description": "Cadastra um associado",
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Informações do associado",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "associated": {
+                  "type": "object",
+                  "properties": {
+                    "cnpj": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "cpf": {
+                      "type": "string"
+                    },
+                    "birthDate": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "password": {
+                      "type": "string"
+                    },
+                    "confirmPassword": {
+                      "type": "string"
+                    },
+                    "phone": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Caso haja dados inválidos ele retornar os campos com errors",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "fieldName": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Associado"
+        ],
+        "description": "Atualiza os dados do associado",
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Informações do associado",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "municipalRegistration": {
+                  "type": "string"
+                },
+                "stateRegistration": {
+                  "type": "string"
+                },
+                "zipCode": {
+                  "type": "string",
+                  "required": true
+                },
+                "street": {
+                  "type": "string",
+                  "required": true
+                },
+                "numberHouse": {
+                  "type": "number"
+                },
+                "neighborhood": {
+                  "type": "string",
+                  "required": true
+                },
+                "complement": {
+                  "type": "string"
+                },
+                "referencePoint": {
+                  "type": "string"
+                },
+                "stateId": {
+                  "type": "number",
+                  "required": true
+                },
+                "cityId": {
+                  "type": "number",
+                  "required": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Caso haja dados inválidos ele retornar os campos com errors",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "fieldName": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "Associado"
+        ],
+        "description": "Autenticar um associado",
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Informações do associado",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": "object",
+                "nomeFantasia": {
+                  "type": "string"
+                },
+                "cnpj": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Caso haja dados inválidos ele retornar os campos com errors",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "fieldName": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reset_password": {
+      "put": {
+        "tags": [
+          "Associado"
+        ],
+        "description": "solicitar recuperação de senha",
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Informações do associado",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Será enviado email com token"
+          },
+          "400": {
+            "description": "Caso haja dados inválidos ele retornar os campos com errors",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "fieldName": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/update_password": {
+      "put": {
+        "tags": [
+          "Associado"
+        ],
+        "description": "Atualizar senha",
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Token de solicitação e nova senha",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "type": "string"
+                },
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Senha alterada"
+          },
+          "400": {
+            "description": "Caso haja dados inválidos ele retornar os campos com errors",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "fieldName": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "send_activation_token": {
+      "put": {
+        "tags": [
+          "Associado"
+        ],
+        "description": "Enviar token de ativação para email",
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "email ",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Token enviado"
+          },
+          "400": {
+            "description": "Caso haja dados inválidos ele retornar os campos com errors",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "fieldName": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/active_register": {
+      "put": {
+        "tags": [
+          "Associado"
+        ],
+        "description": "Ativar associado",
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "token ",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "confirmationToken": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Ativado"
+          },
+          "400": {
+            "description": "Caso haja dados inválidos ele retornar os campos com errors",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "fieldName": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/solicitation_update_email": {
+      "put": {
+        "tags": [
+          "Associado"
+        ],
+        "description": "Enviar solicitação para alterar email",
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "token ",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Email enviado"
+          },
+          "400": {
+            "description": "Caso haja dados inválidos ele retornar os campos com errors",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "fieldName": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token invalido"
+          }
+        }
+      }
+    },
+    "/update_email": {
+      "put": {
+        "tags": [
+          "Associado"
+        ],
+        "description": "Alterar email",
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "token ",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "emailToken": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Email alterado"
+          },
+          "401": {
+            "description": "Token invalido"
+          }
+        }
+      }
+    },
+    "/solicitation_inactive_account": {
+      "put": {
+        "tags": [
+          "Associado"
+        ],
+        "description": "Enviar solicitação para inativar conta",
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Senha do associado e justificativa",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "type": "string"
+                },
+                "justify": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Email enviado"
+          },
+          "401": {
+            "description": "Token invalido"
+          }
+        }
+      }
+    },
+    "/inactive_account": {
+      "put": {
+        "tags": [
+          "Associado"
+        ],
+        "description": "Inativar conta",
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Token de desativação ",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "inactiveToken": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Email enviado"
+          },
+          "401": {
+            "description": "Token invalido"
+          }
+        }
+      }
+    },
+    "/consent_form": {
+      "get": {
+        "tags": [
+          "Termo de uso"
+        ],
+        "description": "Buscar descrição de termo de uso vigente",
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": "object",
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/certificate": {
+      "get": {
+        "tags": [
+          "Associado"
+        ],
+        "description": "Exibe o certificado MEI",
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "certificate": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Certificado não disponível"
+          }
+        }
+      }
+    },
+    "/digital-certificate": {
+      "get": {
+        "tags": [
+          "Associado"
+        ],
+        "description": "Consulta o certificado digital ativo",
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "shelfLifeAt": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Associado"
+        ],
+        "description": "Salva o certificado digital",
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Arquivo do certificado digital",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "file": {
+                  "type": "string",
+                  "format": "binary"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Ok",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "shelfLifeAt": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Caso haja dados inválidos ele retornar os campos com errors",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "fieldName": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Associado"
+        ],
+        "description": "Alterar senha do certificado digital",
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "token ",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Caso haja dados inválidos ele retornar os campos com errors",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "fieldName": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token invalido"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Associado"
+        ],
+        "description": "Excluir certificado digital",
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "token ",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Caso haja dados inválidos ele retornar os campos com errors",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "fieldName": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token invalido"
+          }
+        }
+      }
+    },
+    "/alter_password": {
+      "put": {
+        "tags": [
+          "Associado"
+        ],
+        "description": "Alterar senha do usuário logado.",
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "token ",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "actualPassword": {
+                  "type": "string"
+                },
+                "newPassword": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Error"
+          },
+          "401": {
+            "description": "Token de acesso inválido."
+          }
+        }
+      }
+    },
+    "training": {
+      "get": {
+        "tags": [
+          "Treinamento"
+        ],
+        "description": "Buscar todos os vídeos de treinamento",
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "youtubeCode": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "views": {
+                        "type": "number"
+                      },
+                      "duration": {
+                        "type": "string"
+                      },
+                      "training_categories": {
+                        "type": "array",
+                        "items": {
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "totalResults": {
+                  "type": "number"
+                },
+                "page": {
+                  "type": "number"
+                },
+                "totalPages": {
+                  "type": "number"
+                },
+                "nextPage": {
+                  "type": "number"
+                },
+                "previousPage": {
+                  "type": "number"
+                },
+                "showingResults": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "401": {
+            "description": "Token de acesso inválido."
+          }
+        }
+      }
+    },
+    "training/:id": {
+      "get": {
+        "tags": [
+          "Treinamento"
+        ],
+        "description": "Buscar treinamento por id",
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do treinamento",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "training": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "youtubeCode": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "views": {
+                      "type": "number"
+                    },
+                    "duration": {
+                      "type": "string"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "training_categories": {
+                      "type": "array",
+                      "items": {
+                        "properties": {
+                          "id": {
+                            "type": "number"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "learnVideos": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      },
+                      "youtubeCode": {
+                        "type": "string"
+                      },
+                      "duration": {
+                        "type": "string"
+                      },
+                      "views": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "401": {
+            "description": "Token de acesso inválido."
+          }
+        }
+      }
+    },
+    "training/categories": {
+      "get": {
+        "tags": [
+          "Treinamento"
+        ],
+        "description": "Buscar todas as categorias de treinamento com seus treinamentos",
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "number"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "trainings": {
+                    "type": "array",
+                    "items": {
+                      "properties": {
+                        "id": {
+                          "type": "number"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "youtubeCode": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "views": {
+                          "type": "number"
+                        },
+                        "duration": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "401": {
+            "description": "Token de acesso inválido."
+          }
+        }
+      }
+    },
+    "training/put-views/:id": {
+      "put": {
+        "tags": [
+          "Treinamento"
+        ],
+        "description": "Buscar treinamento por id",
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do treinamento",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Ok"
+          },
+          "401": {
+            "description": "Token de acesso inválido."
+          }
+        }
+      }
+    },
+    "/confort": {
+      "post": {
+        "tags": [
+          "Confort"
+        ],
+        "description": "Registra um nova configuração para api de Confort",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "invoiceSerieId"
+              ],
+              "properties": {
+                "invoiceSerieId": {
+                  "type": "integer",
+                  "required": true,
+                  "description": "Id do número de série cadastrado do associado"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Caso haja dados inválidos ele retornará os campos com errors",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "fieldName": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erro de autenticação"
+          }
+        }
+      }
+    },
+    "/invoice": {
+      "post": {
+        "tags": [
+          "Invoice"
+        ],
+        "description": "Registra os dados para geração de NFSe",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "issuedAt",
+                "competenceDate",
+                "associatedClientId",
+                "associatedServiceId",
+                "culturalIncentivizer",
+                "taxIncentive",
+                "rps",
+                "value",
+                "cityId",
+                "operationNatureId",
+                "issChargeabilityId",
+                "issWithheld"
+              ],
+              "properties": {
+                "issuedAt": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "competenceDate": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "associatedClientId": {
+                  "type": "integer"
+                },
+                "associatedServiceId": {
+                  "type": "integer"
+                },
+                "culturalIncentivizer": {
+                  "type": "boolean"
+                },
+                "taxIncentive": {
+                  "type": "boolean"
+                },
+                "rps": {
+                  "type": "boolean"
+                },
+                "value": {
+                  "type": "number",
+                  "format": "double"
+                },
+                "cityId": {
+                  "type": "integer"
+                },
+                "operationNatureId": {
+                  "type": "integer"
+                },
+                "issChargeabilityId": {
+                  "type": "integer"
+                },
+                "issWithheld": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Caso haja dados inválidos ele retornará os campos com errors",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "fieldName": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erro de autenticação"
+          }
+        }
+      }
+    },
+    "/invoice/cancel/{nfseId}": {
+      "post": {
+        "tags": [
+          "Invoice"
+        ],
+        "description": "Regista os dados para cancelamento de NFSe",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "nfseId",
+            "in": "path",
+            "description": "Id da Nota fiscal de Serviço",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Objeto para envio",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "justification"
+              ],
+              "properties": {
+                "justification": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Caso haja dados inválidos ele retornará os campos com errors",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "fieldName": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erro de autenticação"
+          }
+        }
+      }
+    },
+    "/confort/{confortId}": {
+      "put": {
+        "tags": [
+          "Confort"
+        ],
+        "description": "Registra um nova configuração para api de Confort",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "confortId",
+            "in": "path",
+            "description": "Id da configuração de confort",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "invoiceSerieId"
+              ],
+              "properties": {
+                "invoiceSerieId": {
+                  "type": "integer",
+                  "required": true,
+                  "description": "Id do número de série cadastrado do associado"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Caso haja dados inválidos ele retornará os campos com errors",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "fieldName": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erro de autenticação"
+          }
+        }
+      }
+    },
+    "/invoice/{nfseId}": {
+      "put": {
+        "tags": [
+          "Invoice"
+        ],
+        "description": "Registra os dados para geração de NFSe",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "maintainer",
+            "in": "path",
+            "description": "Nome da Mantenedora",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "nfseId",
+            "in": "path",
+            "description": "Id da nota fiscal",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "issuedAt",
+                "competenceDate",
+                "associatedClientId",
+                "associatedServiceId",
+                "culturalIncentivizer",
+                "taxIncentive",
+                "rps",
+                "value",
+                "cityId",
+                "operationNatureId",
+                "issChargeabilityId",
+                "issWithheld"
+              ],
+              "properties": {
+                "issuedAt": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "competenceDate": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "associatedClientId": {
+                  "type": "integer"
+                },
+                "associatedServiceId": {
+                  "type": "integer"
+                },
+                "culturalIncentivizer": {
+                  "type": "boolean"
+                },
+                "taxIncentive": {
+                  "type": "boolean"
+                },
+                "rps": {
+                  "type": "boolean"
+                },
+                "value": {
+                  "type": "number",
+                  "format": "double"
+                },
+                "cityId": {
+                  "type": "integer"
+                },
+                "operationNatureId": {
+                  "type": "integer"
+                },
+                "issChargeabilityId": {
+                  "type": "integer"
+                },
+                "issWithheld": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Caso haja dados inválidos ele retornará os campos com errors",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "fieldName": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erro de autenticação"
+          }
+        }
+      }
+    }
+  }
+}
